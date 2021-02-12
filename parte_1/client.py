@@ -1,33 +1,35 @@
-
-from socket import * 
 import socket
 
-serverName = 'Localhost'
-serverport = 12456
-clientSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+IP = "127.0.0.1"
+PORT = 12000
 
-print 'Traget IP: ', serverName
-print 'Target Port:', serverport
-print '\n'
+print('Welcome to the simple calculator! \n - Press X if you want to exit \n - Insert the values of A and B and then the operation you want to make')
+
+socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+while True:
+
+    print('Insert the value for A')
+    a = input()
+
+    print('Insert the value for B')
+    b = input()
+
+    print('Insert the arithmetic operation')
+    operator = input()
 
 
-number1 = raw_input ('Input number1: ')
-number2 = raw_input ('Input number2: ')
-operator = raw_input ('Select an operator: (+ / * -) ')
 
+    message = a +', '+b+', '+operator
+    print('Message being send to server: ' + message + "\n")
 
+    socket.sendto(message.encode('utf-8'), (IP, PORT))
+    if a == 'X' or b == 'X' or operator == 'X':
+        break
 
-clientSocket.sendto(number1.encode(),(serverName,serverport))
-clientSocket.sendto(number2.encode(),(serverName,serverport))
-clientSocket.sendto(operator.encode(),(serverName,serverport))
+    data, address = socket.recvfrom(2048)
+    text = data.decode('utf-8')
+    print('Result received from server %s : %s ' % (address, text) + "\n")
 
-
-number3,serverAddress = clientSocket.recvfrom(2048)
-print 'Sent back number 3: ', number3
-number4,serverAddress = clientSocket.recvfrom(2048)
-print 'Number4  send back: ', number4
-answer,serverAddress = clientSocket.recvfrom(2048)
-print 'your result: ', answer
-
-clientSocket.close()
-
+print('Connection Closed')
+socket.close()
