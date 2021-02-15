@@ -1,0 +1,10 @@
+syntax="proto2";
+
+message Sensor{
+  
+  required string nome = 1;
+  optional float temperatura_cozinha = 2;
+  optional float temperatura_quarto = 3;
+  optional int32 status_lampada = 4;
+  
+}
