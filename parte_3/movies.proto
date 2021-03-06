@@ -1,7 +1,0 @@
-syntax="proto2";
-
-message Microondas {
-  
-  required float temperatura = 1;
-  
-}

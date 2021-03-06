@@ -32,7 +32,7 @@ while True:
     if a == 'X' or b == 'X' or operator == 'X':
         break
 
-    result = operators[operator](int(a), int(b))
+    result = operators[operator](float(a), float(b))
 
 
     socket.sendto(str(result).encode(), address)
